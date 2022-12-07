@@ -116,7 +116,7 @@ roundkey=[2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,1]
 
 
 
-for i in range(9):
+for i in range(10):
     subBytes(state)
     print(i + 1, "Sub bytes: ")
     printx(swapx(state))
@@ -124,35 +124,23 @@ for i in range(9):
     shiftRows(state)
     print(i + 1,"Shift rows: ")
     printx(swapx(state))
+    if(i < 9):
+        mstate = swapx(state)
 
-    mstate = swapx(state)
+        g1 = [int(mstate[0], 16),int(mstate[1], 16), int(mstate[2],16), int(mstate[3], 16)]
+        g2 = [int(mstate[4], 16),int(mstate[5], 16), int(mstate[6],16), int(mstate[7], 16)]
+        g3 = [int(mstate[8], 16),int(mstate[9], 16), int(mstate[10],16), int(mstate[11], 16)]
+        g4 = [int(mstate[12], 16),int(mstate[13], 16), int(mstate[14],16), int(mstate[15], 16)]
+        mixColumn(g1)
+        mixColumn(g2)
+        mixColumn(g3)
+        mixColumn(g4)
 
-    g1 = [int(mstate[0], 16),int(mstate[1], 16), int(mstate[2],16), int(mstate[3], 16)]
-    g2 = [int(mstate[4], 16),int(mstate[5], 16), int(mstate[6],16), int(mstate[7], 16)]
-    g3 = [int(mstate[8], 16),int(mstate[9], 16), int(mstate[10],16), int(mstate[11], 16)]
-    g4 = [int(mstate[12], 16),int(mstate[13], 16), int(mstate[14],16), int(mstate[15], 16)]
-    mixColumn(g1)
-    mixColumn(g2)
-    mixColumn(g3)
-    mixColumn(g4)
+        g = g1 + g2 + g3 + g4
 
-    g = g1 + g2 + g3 + g4
-
-    print(i + 1,"MixColumns: ")
-    printx(swapx(g))
-    state = g
+        print(i + 1,"MixColumns: ")
+        printx(swapx(g))
+        state = g
     addRoundKey(state,roundkey)
     print(i + 1,"AddRoundKey:")
     printx(swapx(state))
-
-subBytes(state)
-print(10, "Sub bytes: ")
-printx(swapx(state))
-    
-shiftRows(state)
-print(10,"Shift rows: ")
-printx(swapx(state))
-
-addRoundKey(state,roundkey)
-print(10,"AddRoundKey:")
-printx(swapx(state))
